@@ -1,0 +1,6 @@
+node_modules/
+
+#backup diretories
+backup-20210824/
+
+.env
