@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const { create, list,detail,update,remove,addLabel } = require('../controller/moment.contorller')
+const { create, list,detail,update,remove,addLabel,fileInfo } = require('../controller/moment.contorller')
 
 const { verifyAuth, verifyPermission } = require('../middleware/auth.middleware')
 
@@ -23,6 +23,6 @@ momentRouter.delete('/:momentId',verifyAuth,verifyPermission,remove)
 momentRouter.post('/:momentId/labels',verifyAuth,verifyPermission,verifyLabelsExists,addLabel)
 
 //给动态配图
-
+momentRouter.post('/images/:filename',fileInfo);
 
 module.exports = momentRouter

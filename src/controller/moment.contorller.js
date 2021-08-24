@@ -56,14 +56,28 @@ class momentController {
         const { momentId } = ctx.params
 
         for (let label of labels) {
-            const isExist = await momentService.hasLabels(momentId,label.id)
-            if(!isExist){
-                await momentService.addLabel(momentId,label.id)
+            const isExist = await momentService.hasLabels(momentId, label.id)
+            if (!isExist) {
+                await momentService.addLabel(momentId, label.id)
             }
             ctx.body = "给动态添加标签成功~";
         }
     }
+
+    async fileInfo() {
+        let { filename } = ctx.params;
+        const fileInfo = await fileService.getFileByFilename(filename);
+        const { type } = ctx.query;
+        const types = ["small", "middle", "large"];
+        if (types.some(item => item === type)) {
+            filename = filename + '-' + type;
+        }
+
+        ctx.response.set('content-type', fileInfo.mimetype);
+        ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`);
+    }
 }
+
 
 module.exports = new momentController()
 
