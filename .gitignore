@@ -4,3 +4,6 @@ node_modules/
 backup-20210824/
 
 .env
+
+#files diretories
+uploads/

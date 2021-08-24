@@ -21,7 +21,7 @@ momentRouter.delete('/:momentId',verifyAuth,verifyPermission,remove)
 
 //给动态添加标签
 momentRouter.post('/:momentId/labels',verifyAuth,verifyPermission,verifyLabelsExists,addLabel)
-
+//
 //给动态配图
 momentRouter.post('/images/:filename',fileInfo);
 

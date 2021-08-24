@@ -57,6 +57,7 @@ class momentController {
 
         for (let label of labels) {
             const isExist = await momentService.hasLabels(momentId, label.id)
+            console.log(!isExist);
             if (!isExist) {
                 await momentService.addLabel(momentId, label.id)
             }
@@ -64,7 +65,7 @@ class momentController {
         }
     }
 
-    async fileInfo() {
+    async fileInfo(ctx,next) {
         let { filename } = ctx.params;
         const fileInfo = await fileService.getFileByFilename(filename);
         const { type } = ctx.query;

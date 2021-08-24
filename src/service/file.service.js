@@ -14,9 +14,13 @@ class FileService {
   }
 
   async createFile(filename, mimetype, size, userId, momentId) {
-    const statement = `INSERT INTO file (filename, mimetype, size, user_id, moment_id) VALUES (?, ?, ?, ?, ?)`;
-    const [result] = await connection.execute(statement, [filename, mimetype, size, userId, momentId]);
-    return result;
+    try {
+      const statement = `INSERT INTO file (filename, mimetype, size, user_id, moment_id) VALUES (?, ?, ?, ?, ?)`;
+      const [result] = await connection.execute(statement, [filename, mimetype, size, userId, momentId]);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getFileByFilename(filename) {
