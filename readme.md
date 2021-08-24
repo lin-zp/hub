@@ -1,5 +1,4 @@
-卷 D 的文件夹 PATH 列表
-卷序列号为 143C-296E
+```
 D:.
 ├─backup-20210824
 │  ├─node_modules
@@ -760,3 +759,5 @@ D:.
 └─uploads
     ├─avatar
     └─picture
+```
+
