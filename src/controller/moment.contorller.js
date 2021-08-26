@@ -1,4 +1,8 @@
+const fs = require('fs')
+
 const momentService = require('../service/moment.service');
+const fileService = require('../service/file.service')
+const { PICTURE_PATH } = require('../constants/file-path')
 
 class momentController {
     async create(ctx, next) {
@@ -65,17 +69,25 @@ class momentController {
         }
     }
 
-    async fileInfo(ctx,next) {
-        let { filename } = ctx.params;
-        const fileInfo = await fileService.getFileByFilename(filename);
-        const { type } = ctx.query;
-        const types = ["small", "middle", "large"];
-        if (types.some(item => item === type)) {
-            filename = filename + '-' + type;
+    async fileInfo(ctx, next) {
+        try {
+            console.log("查看图片");
+            let { filename } = ctx.params;
+            const fileInfo = await fileService.getFileByFilename(filename);
+            const { type } = ctx.query;
+            const types = ["small", "middle", "large"];
+            if (types.some(item => item === type)) {
+                filename = filename + '-' + type;
+            }
+
+            ctx.response.set('content-type', fileInfo.mimetype);
+            console.log("查看图片成功");
+                ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`);
+            
+        } catch (error) {
+            console.log(error);
         }
 
-        ctx.response.set('content-type', fileInfo.mimetype);
-        ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`);
     }
 }
 

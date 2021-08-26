@@ -23,6 +23,6 @@ momentRouter.delete('/:momentId',verifyAuth,verifyPermission,remove)
 momentRouter.post('/:momentId/labels',verifyAuth,verifyPermission,verifyLabelsExists,addLabel)
 //
 //给动态配图
-momentRouter.post('/images/:filename',fileInfo);
+momentRouter.get('/images/:filename',fileInfo);
 
 module.exports = momentRouter

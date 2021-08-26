@@ -20,18 +20,25 @@ const pictureResize = async (ctx, next) => {
     //获取图像信息
     try {
         const files = ctx.req.files;
+        console.log('-----', files);
         // ctx.req/res 是原生的请求/回复对象
         // ctx.request/response 是koa封装的请求/回复对象
         //对图像进行处理
+
         for (let file of files) {
-            const destPath = path.join(file.destination, file.filename);
-            console.log(file.destination);
-            console.log(file.filename);
-            Jimp.read(destPath).then(Image => {
-                Image.resize(LARGE, Jimp.AUTO).write(`${destPath}-large`);
-                Image.resize(MIDDLE, Jimp.AUTO).write(`${destPath}-middle`);
-                Image.resize(SMALL, Jimp.AUTO).write(`${destPath}-small`);
-            })
+            if (file.mimetype === "text/plain") {
+                //上传文本时不做resize操作
+            } else {
+                const destPath = path.join(file.destination, file.filename);
+                console.log(destPath);
+
+                Jimp.read(destPath).then(Image => {
+                    Image.resize(LARGE, Jimp.AUTO).write(`${destPath}-large`);
+                    Image.resize(MIDDLE, Jimp.AUTO).write(`${destPath}-middle`);
+                    Image.resize(SMALL, Jimp.AUTO).write(`${destPath}-small`);
+                })
+            }
+
         }
     } catch (error) {
         console.log(error);
@@ -39,7 +46,7 @@ const pictureResize = async (ctx, next) => {
 
     await next();
 }
-// }
+
 
 module.exports = { avatarHandler, pictureHandler, pictureResize }
 
