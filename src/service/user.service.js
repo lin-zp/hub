@@ -21,6 +21,16 @@ class userService {
         const [result] = await connection.execute(statement, [avatarUrl, userId]);
         return result;
     }
+
+    async getAvatarByUserid(userId){
+        try {
+            const statement = `select avatar_url from user where id = ?`
+        const result = await connection.execute(statement,[userId])
+        return result[0]
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new userService()

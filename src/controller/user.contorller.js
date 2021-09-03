@@ -9,6 +9,19 @@ class userController {
         console.log(result);
         ctx.body = result
     }
+
+    async avatarInfo(ctx,next){
+        try {
+            console.log(ctx.user);
+        const {id} = ctx.user
+        const result = await userService.getAvatarByUserid(id)
+
+        ctx.body = result
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
 }
 
 module.exports = new userController();
